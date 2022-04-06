@@ -37,6 +37,18 @@ export default {
     return { stopID };
   },
 
+  // mounted: function () {
+  //   this.$nextTick(function () {
+  //     // Local storage stuff
+  //     if (localStorage.favorites) {
+  //       let favorites = JSON.parse(localStorage.favorites);
+  //       this.$store.commit("initFavorites", favorites);
+  //     } else {
+  //       localStorage.favorites = JSON.stringify([]);
+  //     }
+  //   });
+  // },
+
   async fetch() {
     this.results = await fetch(
       "https://my-servo.herokuapp.com/tbmAPI/get_infos?stopid=" +
@@ -45,10 +57,6 @@ export default {
     console.log(this.results);
   },
 
-  //   async asyncData({ params }) {
-  //     const stopID = params.stop; // When calling /abc the slug will be "abc"
-  //     return { stopID };
-  //   },
   data: () => ({
     results: [],
   }),

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row align="center" justify="space-around" @click.stop="openDialog()">
+    <v-row align="center" justify="space-around">
       <v-col cols="3">
         <v-avatar color="green" class="white--text">
           {{ getAvatarText(result) }}
@@ -9,9 +9,21 @@
          
         </div> -->
       </v-col>
-      <v-col cols="9">
+      <v-col cols="9" @click.stop="openDialog()">
         {{ result.direction }}
       </v-col>
+      <!-- <v-col cols="2">
+        <v-btn
+          icon
+          v-if="$store.getters.isFavorite(result)"
+          @click="$store.commit('removeFavorite', result)"
+        >
+          <v-icon> mdi-star </v-icon>
+        </v-btn>
+        <v-btn icon v-else @click="$store.commit('addFavorite', result)">
+          <v-icon> mdi-star-outline </v-icon>
+        </v-btn>
+      </v-col> -->
     </v-row>
     <v-dialog v-model="dialog">
       <v-card>
@@ -59,7 +71,7 @@
 
 <script>
 export default {
-  props: ["result", "stopName"],
+  props: ["result"],
 
   data: () => ({
     dialog: false,
@@ -84,12 +96,6 @@ export default {
 
       this.loading = true;
       this.$axios.$get(url).then((res) => {
-        // res.sort(function compareFn(a, b) {
-        //   console.log(a[0].waitTimeText);
-        //   console.log(b[0].waitTimeText);
-        //   return a[0].waitTimeText > b[0].waitTimeText;
-        // });
-
         this.times = res
           .flat()
           .sort((a, b) => (a.waitTime > b.waitTime ? 1 : -1));

@@ -1,8 +1,8 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-img src="/banner.png"> </v-img>
-      <v-card class="py-8 px-4 mx-4 rounded-t-xl" elevation="6">
+      <v-img src="/banner.png" class="mx-12"> </v-img>
+      <v-card class="py-8 pt-6 px-4 mx-4 rounded-t-xl" elevation="6">
         <v-text-field
           label="Rechercher un arrêt"
           hide-details
@@ -12,9 +12,9 @@
       </v-card>
       <div class="mx-6 mt-6">
         <div v-for="(result, index) in searchResults" :key="index" class="my-4">
-          <NuxtLink class="text-body-1 black--text" :to="result.id">
+          <div class="text-body-1 black--text" @click="$router.push(result.id)">
             {{ result.text }}
-          </NuxtLink>
+          </div>
           <v-divider class="mt-4"> </v-divider>
         </div>
       </div>
@@ -28,7 +28,21 @@ export default {
     searchResults: [],
     searchLoading: false,
     stop: "",
+    favorite: [],
   }),
+
+  // mounted: function () {
+  //   this.$nextTick(function () {
+  //     // Local storage stuff
+  //     if (localStorage.favorites) {
+  //       let favorites = JSON.parse(localStorage.favorites);
+  //       this.$store.commit("initFavorites", favorites);
+  //     } else {
+  //       localStorage.favorites = JSON.stringify([]);
+  //     }
+  //   });
+  // },
+
   methods: {
     async fetchSuggestions(stop) {
       this.searchLoading = true;
