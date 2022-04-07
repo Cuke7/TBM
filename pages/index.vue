@@ -23,7 +23,7 @@
       </div>
 
       <v-expansion-panels
-        class="px-4 mt-4"
+        class="mt-4 px-4"
         v-model="panel"
         v-if="favorites.length > 0"
       >

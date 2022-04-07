@@ -1,40 +1,38 @@
 <template>
   <div>
-    <v-divider></v-divider>
-    <v-card-subtitle class="my-2 py-0 font-weight-bold text-body-1">
-      <v-icon slot="prependIcon" color="red"> mdi-map-marker </v-icon>
-      {{ favorite.stopPointName }}
-    </v-card-subtitle>
+    <v-divider class="my-2"></v-divider>
 
-    <v-row>
-      <v-col cols="5" class="pt-0">
-        <v-card-subtitle class="py-0 my-2">
-          <v-icon slot="prependIcon" color="blue"> mdi-tram </v-icon>
-          {{ favorite.lineName }}
+    <v-row align="center" class="my-2">
+      <v-col cols="9" class="pa-0">
+        <v-card-subtitle class="pa-0 font-weight-bold text-body-1">
+          <v-icon slot="prependIcon" color="red"> mdi-map-marker </v-icon>
+          {{ favorite.stopPointName }}
         </v-card-subtitle>
-        <v-card-subtitle class="my-2 py-0">
-          <v-icon slot="prependIcon" color="blue">
-            mdi-arrow-right-bold-box
-          </v-icon>
-          {{ favorite.direction }}
-        </v-card-subtitle>
-      </v-col>
-      <v-col cols="5" class="pt-0">
-        <v-card-subtitle class="py-0 my-2" v-if="times[0]">
+        <v-card-subtitle class="pa-0 my-2" v-if="times[0]">
           <v-icon slot="prependIcon" color="green">
             mdi-arrow-right-box
           </v-icon>
           {{ times[0].destinationName }}
         </v-card-subtitle>
-        <v-card-subtitle class="my-2 py-0" v-if="times[0]">
-          <v-icon slot="prependIcon" color="red"> mdi-timer-sand-empty </v-icon>
-          {{ times[0].waitTimeText }}
-        </v-card-subtitle>
       </v-col>
-      <v-col cols="2">
+
+      <v-col cols="2" class="pa-0">
         <v-btn icon @click="$store.commit('removeFavorite', favoriteSerial)">
           <v-icon color="gold"> mdi-star </v-icon>
         </v-btn>
+      </v-col>
+
+      <v-col cols="6" class="pa-0">
+        <v-card-subtitle class="ma-0 pa-0">
+          <v-icon slot="prependIcon" color="blue"> mdi-tram </v-icon>
+          {{ favorite.lineName }}
+        </v-card-subtitle>
+      </v-col>
+      <v-col cols="6" class="pa-0">
+        <v-card-subtitle class="ma-0 pa-0" v-if="times[0]">
+          <v-icon slot="prependIcon" color="red"> mdi-timer-sand-empty </v-icon>
+          {{ times[0].waitTimeText }}
+        </v-card-subtitle>
       </v-col>
     </v-row>
 
