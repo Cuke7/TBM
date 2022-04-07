@@ -37,24 +37,26 @@ export default {
     return { stopID };
   },
 
-  // mounted: function () {
-  //   this.$nextTick(function () {
-  //     // Local storage stuff
-  //     if (localStorage.favorites) {
-  //       let favorites = JSON.parse(localStorage.favorites);
-  //       this.$store.commit("initFavorites", favorites);
-  //     } else {
-  //       localStorage.favorites = JSON.stringify([]);
-  //     }
-  //   });
-  // },
+  mounted: function () {
+    this.$nextTick(function () {
+      //Local storage stuff
+      if (localStorage.favorites) {
+        let favorites = [...JSON.parse(localStorage.favorites)];
+        // console.log("Favorites from localStorage", favorites);
+        this.$store.commit("initFavorites", favorites);
+      } else {
+        // console.log("Creating for localStorage");
+        localStorage.favorites = JSON.stringify([]);
+      }
+    });
+  },
 
   async fetch() {
     this.results = await fetch(
       "https://my-servo.herokuapp.com/tbmAPI/get_infos?stopid=" +
         encodeURI(this.stopID)
     ).then((res) => res.json());
-    console.log(this.results);
+    // console.log(this.results);
   },
 
   data: () => ({

@@ -9,25 +9,25 @@
          
         </div> -->
       </v-col>
-      <v-col cols="9" @click.stop="openDialog()">
+      <v-col cols="7" @click.stop="openDialog()">
         {{ result.direction }}
       </v-col>
-      <!-- <v-col cols="2">
+      <v-col cols="2">
         <v-btn
           icon
-          v-if="$store.getters.isFavorite(result)"
-          @click="$store.commit('removeFavorite', result)"
+          v-if="isFavorite()"
+          @click="$store.commit('removeFavorite', favorite)"
         >
           <v-icon> mdi-star </v-icon>
         </v-btn>
-        <v-btn icon v-else @click="$store.commit('addFavorite', result)">
+        <v-btn icon v-else @click="$store.commit('addFavorite', favorite)">
           <v-icon> mdi-star-outline </v-icon>
         </v-btn>
-      </v-col> -->
+      </v-col>
     </v-row>
-    <v-dialog v-model="dialog">
+    <v-dialog v-model="dialog" max-width="500">
       <v-card>
-        <v-card-title style="word-break: normal" class="my-2 pb-0">
+        <v-card-title style="word-break: normal" class="mb-2 pb-0">
           <v-icon slot="prependIcon" color="red"> mdi-map-marker </v-icon>
           {{ result.stopPointName }}
         </v-card-title>
@@ -79,7 +79,27 @@ export default {
     loading: false,
   }),
 
+  computed: {
+    favorite() {
+      return JSON.stringify(this.result);
+      // "https://my-servo.herokuapp.com/tbmAPI/get_infos?externalcode=" +
+      // this.result.externalCode +
+      // "&code=" +
+      // this.result.code +
+      // "|" +
+      // this.result.stopPointName
+    },
+    favorites() {
+      return this.$store.state.favorites;
+    },
+  },
+
   methods: {
+    isFavorite() {
+      let isFavorite = this.favorites.includes(this.favorite);
+      // console.log(isFavorite);
+      return isFavorite;
+    },
     getAvatarText(result) {
       if (result.lineName.includes("Tram")) {
         return result.lineName.split(" ")[1];
@@ -99,7 +119,7 @@ export default {
         this.times = res
           .flat()
           .sort((a, b) => (a.waitTime > b.waitTime ? 1 : -1));
-        console.log(this.times);
+        // console.log(this.times);
         this.loading = false;
       });
       this.dialog = true;

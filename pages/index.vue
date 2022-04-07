@@ -8,8 +8,11 @@
           hide-details
           v-model="stop"
           :loading="searchLoading"
+          append-icon="mdi-close"
+          @click:append="stop = ''"
         ></v-text-field>
       </v-card>
+
       <div class="mx-6 mt-6">
         <div v-for="(result, index) in searchResults" :key="index" class="my-4">
           <div class="text-body-1 black--text" @click="$router.push(result.id)">
@@ -18,6 +21,23 @@
           <v-divider class="mt-4"> </v-divider>
         </div>
       </div>
+
+      <v-expansion-panels
+        class="px-4 mt-4"
+        v-model="panel"
+        v-if="favorites.length > 0"
+      >
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            <v-card-title class="py-0"> Favoris </v-card-title>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <div v-for="(favorite, index) in favorites" :key="index">
+              <Favorite :favoriteSerial="favorite"></Favorite>
+            </div>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-col>
   </v-row>
 </template>
@@ -29,19 +49,22 @@ export default {
     searchLoading: false,
     stop: "",
     favorite: [],
+    panel: undefined,
   }),
 
-  // mounted: function () {
-  //   this.$nextTick(function () {
-  //     // Local storage stuff
-  //     if (localStorage.favorites) {
-  //       let favorites = JSON.parse(localStorage.favorites);
-  //       this.$store.commit("initFavorites", favorites);
-  //     } else {
-  //       localStorage.favorites = JSON.stringify([]);
-  //     }
-  //   });
-  // },
+  mounted: function () {
+    this.$nextTick(function () {
+      //Local storage stuff
+      if (localStorage.favorites) {
+        let favorites = [...JSON.parse(localStorage.favorites)];
+        // console.log("Favorites from localStorage", favorites);
+        this.$store.commit("initFavorites", favorites);
+      } else {
+        console.log("Creating for localStorage");
+        // localStorage.favorites = JSON.stringify([]);
+      }
+    });
+  },
 
   methods: {
     async fetchSuggestions(stop) {
@@ -56,11 +79,20 @@ export default {
   },
   watch: {
     stop(val) {
+      if (val.length > 0) {
+        this.panel = undefined;
+      }
       if (val.length > 2) {
         this.fetchSuggestions(val);
       } else {
         this.searchResults = [];
       }
+    },
+  },
+
+  computed: {
+    favorites() {
+      return this.$store.state.favorites;
     },
   },
 };
