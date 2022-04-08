@@ -18,10 +18,10 @@
           v-if="isFavorite()"
           @click="$store.commit('removeFavorite', favorite)"
         >
-          <v-icon> mdi-star </v-icon>
+          <v-icon color="amber lighten-1"> mdi-star </v-icon>
         </v-btn>
         <v-btn icon v-else @click="$store.commit('addFavorite', favorite)">
-          <v-icon> mdi-star-outline </v-icon>
+          <v-icon color="amber lighten-1"> mdi-star-outline </v-icon>
         </v-btn>
       </v-col>
     </v-row>

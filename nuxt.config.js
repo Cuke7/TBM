@@ -46,7 +46,7 @@ export default {
       name: "TBM",
       lang: "fr",
       // theme_color: "#282a36",
-      // background_color: "#282a36",
+      background_color: "#1976d2",
       short_name: "TBM",
       display: "standalone",
     },

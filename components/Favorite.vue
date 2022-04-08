@@ -18,21 +18,36 @@
 
       <v-col cols="2" class="pa-0">
         <v-btn icon @click="$store.commit('removeFavorite', favoriteSerial)">
-          <v-icon color="gold"> mdi-star </v-icon>
+          <v-icon color="amber lighten-1"> mdi-star </v-icon>
         </v-btn>
       </v-col>
 
-      <v-col cols="6" class="pa-0">
-        <v-card-subtitle class="ma-0 pa-0">
-          <v-icon slot="prependIcon" color="blue"> mdi-tram </v-icon>
-          {{ favorite.lineName }}
-        </v-card-subtitle>
+      <v-col cols="12" v-if="$fetchState.pending">
+        <div class="text-center">
+          <v-progress-circular
+            indeterminate
+            color="loader2"
+          ></v-progress-circular>
+        </div>
       </v-col>
-      <v-col cols="6" class="pa-0">
-        <v-card-subtitle class="ma-0 pa-0" v-if="times[0]">
-          <v-icon slot="prependIcon" color="red"> mdi-timer-sand-empty </v-icon>
-          {{ times[0].waitTimeText }}
-        </v-card-subtitle>
+
+      <v-col cols="12" v-else>
+        <v-row>
+          <v-col cols="6" class="pa-0">
+            <v-card-subtitle class="ma-0 pa-0">
+              <v-icon slot="prependIcon" color="blue"> mdi-tram </v-icon>
+              {{ favorite.lineName }}
+            </v-card-subtitle>
+          </v-col>
+          <v-col cols="6" class="pa-0">
+            <v-card-subtitle class="ma-0 pa-0" v-if="times[0]">
+              <v-icon slot="prependIcon" color="red">
+                mdi-timer-sand-empty
+              </v-icon>
+              {{ times[0].waitTimeText }}
+            </v-card-subtitle>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
 
