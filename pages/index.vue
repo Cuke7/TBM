@@ -1,8 +1,8 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-img src="/banner.png" class="mx-12"> </v-img>
-      <v-card class="py-8 pt-6 px-4 mx-4 rounded-t-xl" elevation="6">
+      <v-img src="/banner.png" class="mx-6"> </v-img>
+      <v-card class="py-4 pt-6 px-4 mx-4 rounded-t-xl" elevation="0">
         <v-text-field
           label="Rechercher un arrêt"
           hide-details
@@ -13,7 +13,7 @@
         ></v-text-field>
       </v-card>
 
-      <div class="mx-6 mt-6">
+      <div class="mx-8 mt-6">
         <div v-for="(result, index) in searchResults" :key="index" class="my-4">
           <div class="text-body-1 black--text" @click="$router.push(result.id)">
             {{ result.text }}
@@ -21,23 +21,12 @@
           <v-divider class="mt-4"> </v-divider>
         </div>
       </div>
-
-      <v-expansion-panels
-        class="mt-4 px-4"
-        v-model="panel"
-        v-if="favorites.length > 0"
-      >
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            <v-card-title class="py-0"> Favoris </v-card-title>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <div v-for="(favorite, index) in favorites" :key="index">
-              <Favorite :favoriteSerial="favorite"></Favorite>
-            </div>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
+      <v-card-title class="py-0 px-8"> Favoris </v-card-title>
+      <div class="px-8">
+        <div v-for="(favorite, index) in favorites" :key="index">
+          <Favorite :favoriteSerial="favorite"></Favorite>
+        </div>
+      </div>
     </v-col>
   </v-row>
 </template>

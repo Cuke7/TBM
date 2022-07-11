@@ -2,7 +2,7 @@
   <div>
     <v-row align="center" justify="space-around">
       <v-col cols="3">
-        <v-avatar color="green" class="white--text">
+        <v-avatar :color="getAvatarColor(result)" class="white--text">
           {{ getAvatarText(result) }}
         </v-avatar>
         <!-- <div class="primary--text text-h6">
@@ -105,6 +105,13 @@ export default {
         return result.lineName.split(" ")[1];
       } else {
         return result.code;
+      }
+    },
+    getAvatarColor(result) {
+      if (result.lineName.includes("Tram")) {
+        return "green";
+      } else {
+        return "blue";
       }
     },
     openDialog() {
